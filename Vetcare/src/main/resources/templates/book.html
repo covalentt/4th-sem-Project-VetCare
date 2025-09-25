@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Appointment | Vetcare Nepal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../static/css/book.css">
+    <!-- Favicon (optional, ensure file exists or remove) -->
+    <link rel="icon" type="image/x-icon" href="/image/favicon.ico">
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+    emailjs.init('wOQtWpKZ8QGZ1zK8a');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="index.html"><img src="/image/logo.png" alt="Vetcare Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Our Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="product.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-buttons d-flex align-items-center">
+                <!-- JS injects dynamic buttons here -->
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="page-heading">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="animate__animated animate__fadeInDown">Book Your Appointment</h2>
+                <p class="animate__animated animate__fadeInUp animate__delay-1s">Schedule professional veterinary care for your beloved pets with our experienced team</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Section -->
+<section class="booking-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="booking-container">
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Select Service</div>
+                            <div class="step-line"></div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Pet Information</div>
+                            <div class="step-line"></div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Date & Time</div>
+                            <div class="step-line"></div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Contact Details</div>
+                            <div class="step-line"></div>
+                        </div>
+                        <div class="step" data-step="5">
+                            <div class="step-number">5</div>
+                            <div class="step-title">Confirmation</div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <form id="bookingForm">
+                        <!-- Step 1: Service Selection -->
+                        <div class="form-section active" id="step1">
+                            <h3 class="mb-4 text-center">Select Your Service</h3>
+                            <div class="service-cards" id="serviceCards">
+                                <!-- Services will be dynamically populated here -->
+                            </div>
+                            <div id="serviceError" class="text-danger text-center mt-3" style="display: none;">Failed to load services. Please try again later.</div>
+                        </div>
+
+                        <!-- Step 2: Pet Information -->
+                        <div class="form-section" id="step2">
+                            <h3 class="mb-4 text-center">Pet Information</h3>
+                            <div class="form-group mb-4">
+                                <label class="form-label">Select Pet *</label>
+                                <select class="form-control" name="petSelect" id="petSelect" required>
+                                    <option value="">Select a pet or add new</option>
+                                    <option value="new">Add New Pet</option>
+                                    <!-- Existing pets populated here -->
+                                </select>
+                                <div id="petError" class="text-danger mt-2" style="display: none;">Failed to load pets. Please try again later.</div>
+                            </div>
+                            <div id="newPetForm" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Pet Name *</label>
+                                            <input type="text" class="form-control" name="petName" placeholder="Enter your pet's name" data-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Pet Type *</label>
+                                            <select class="form-control" name="petType" data-required="true">
+                                                <option value="">Select pet type</option>
+                                                <option value="dog">Dog</option>
+                                                <option value="cat">Cat</option>
+                                                <option value="bird">Bird</option>
+                                                <option value="rabbit">Rabbit</option>
+                                                <option value="hamster">Hamster</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Breed</label>
+                                            <input type="text" class="form-control" name="breed" placeholder="Enter breed (optional)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Age *</label>
+                                            <select class="form-control" name="age" data-required="true">
+                                                <option value="">Select age range</option>
+                                                <option value="0-6months">0-6 months</option>
+                                                <option value="6months-1year">6 months - 1 year</option>
+                                                <option value="1-3years">1-3 years</option>
+                                                <option value="3-7years">3-7 years</option>
+                                                <option value="7+years">7+ years</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Gender *</label>
+                                            <select class="form-control" name="gender" data-required="true">
+                                                <option value="">Select gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Weight (kg)</label>
+                                            <input type="number" class="form-control" name="weight" placeholder="Enter weight in kg" step="0.1">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Medical History / Special Notes</label>
+                                            <textarea class="form-control" name="medicalHistory" rows="4" placeholder="Any previous medical conditions, allergies, or special notes about your pet..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Date & Time Selection -->
+                        <div class="form-section" id="step3">
+                            <h3 class="mb-4 text-center">Select Date & Time</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group date-input">
+                                        <label class="form-label">Preferred Date *</label>
+                                        <input type="date" class="form-control" name="appointmentDate" required min="2025-09-15">
+                                        <span class="calendar-icon"><i class="fas fa-calendar-alt"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Preferred Doctor</label>
+                                        <select class="form-control" name="doctor" id="doctorSelect">
+                                            <option value="">Any Available Doctor</option>
+                                            <!-- Doctors will be dynamically populated here -->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Available Time Slots *</label>
+                                <div class="time-slots" id="timeSlots">
+                                    <!-- Time slots will be dynamically populated here -->
+                                </div>
+                                <input type="hidden" name="appointmentTime" id="selectedTime" required>
+                                <div id="timeSlotError" class="text-danger text-center mt-3" style="display: none;">Failed to load time slots. Please try again later.</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Additional Requests</label>
+                                <textarea class="form-control" name="additionalRequests" rows="3" placeholder="Any specific requests or concerns you'd like to mention..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Contact Details -->
+                        <div class="form-section" id="step4">
+                            <h3 class="mb-4 text-center">Your Contact Information</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Full Name *</label>
+                                        <input type="text" class="form-control" name="ownerName" placeholder="Enter your full name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Phone Number *</label>
+                                        <input type="tel" class="form-control" name="phone" placeholder="+977 98XXXXXXXX" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Email Address *</label>
+                                        <input type="email" class="form-control" name="email" placeholder="your@email.com" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Emergency Contact</label>
+                                        <input type="tel" class="form-control" name="emergencyContact" placeholder="Emergency contact number">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Address *</label>
+                                        <textarea class="form-control" name="address" rows="3" placeholder="Enter your complete address" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="terms" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        I agree to the <a href="#" class="text-primary">Terms and Conditions</a> and <a href="#" class="text-primary">Privacy Policy</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="notifications" id="notifications">
+                                    <label class="form-check-label" for="notifications">
+                                        I would like to receive appointment reminders and pet care tips via SMS/Email
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Confirmation -->
+                        <div class="form-section" id="step5">
+                            <div class="confirmation-message" id="confirmationMessage" style="display: none;">
+                                <i class="fas fa-check-circle"></i>
+                                <h3>Appointment Confirmed!</h3>
+                                <p>Your appointment has been successfully booked. You will receive a confirmation email shortly.</p>
+                                <p><strong>Appointment ID: #VET<span id="appointmentId"></span></strong></p>
+                            </div>
+                            <h3 class="mb-4 text-center">Review Your Booking</h3>
+                            <div class="summary-card">
+                                <h4 class="text-center mb-4">Appointment Summary</h4>
+                                <div class="summary-item">
+                                    <span>Service:</span>
+                                    <span id="summaryService">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Pet Name:</span>
+                                    <span id="summaryPetName">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Date:</span>
+                                    <span id="summaryDate">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Time:</span>
+                                    <span id="summaryTime">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Doctor:</span>
+                                    <span id="summaryDoctor">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Owner:</span>
+                                    <span id="summaryOwner">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Phone:</span>
+                                    <span id="summaryPhone">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span><strong>Total Cost:</strong></span>
+                                    <span><strong>NPR <span id="summaryPrice">0</span></strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="navigation-buttons">
+                            <button type="button" class="btn btn-secondary" id="prevBtn" onclick="changeStep(-1)" style="display: none;">
+                                <i class="fas fa-arrow-left me-2"></i>Previous
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">
+                                Next<i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                                <i class="fas fa-calendar-check me-2"></i>Confirm Booking
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 footer-info">
+                <div class="footer-brand">VetCare</div>
+                <p>Providing professional veterinary care and products to ensure the health and happiness of your beloved pets.</p>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="product.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="book.html">Book Appointment</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-12 footer-newsletter">
+                <h4>Subscribe to Our Newsletter</h4>
+                <p>Stay updated with our latest services, products, and pet care tips</p>
+                <form action="" method="post">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                </form>
+                <div class="social-links mt-4">
+                    <a href="https://www.facebook.com" target="_blank" class="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" class="tiktok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Vetcare Nepal. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="../static/Js/book.js"></script>
+<script src="../static/Js/navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products | VetCare Nepal</title>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/about}">About Us</a></li>
+            <li><a th:href="@{/services}">Our Services</a></li>
+            <li><a th:href="@{/products}">Products</a></li>
+            <li><a th:href="@{/contact}">Contact</a></li>
+        </ul>
+        <div>
+            <span th:text="${cartCount ?: 0}">0</span>
+            <a th:href="@{/cart}">Cart</a>
+        </div>
+    </nav>
+</header>
+
+<section>
+    <h2>Your Cart</h2>
+    <div th:each="item : ${cartItems}">
+        <div>
+            <h3 th:text="${item.name}">Product Name</h3>
+            <p th:text="'Rs. ' + ${item.price}">Rs. 0</p>
+            <button>-</button>
+            <span th:text="${item.quantity}">1</span>
+            <button>+</button>
+        </div>
+    </div>
+    <p>Total: <span th:text="'Rs. ' + ${cartTotal ?: 0}">Rs. 0</span></p>
+    <a th:href="@{/checkout}" th:if="${cartItems.size() > 0}">Proceed to Checkout</a>
+</section>
+
+<section>
+    <h2>Checkout Details</h2>
+    <form th:action="@{/checkout}" method="post">
+        <label>Full Name <input type="text" th:field="*{fullName}" required></label>
+        <label>Delivery Address <input type="text" th:field="*{address}" required></label>
+        <label>Phone Number <input type="tel" th:field="*{phoneNumber}" required></label>
+        <fieldset>
+            <legend>Payment Method</legend>
+            <label><input type="radio" th:field="*{paymentMethod}" value="COD"> Cash on Delivery</label>
+            <label><input type="radio" th:field="*{paymentMethod}" value="Digital"> Digital Payment (e.g., eSewa, Khalti)</label>
+        </fieldset>
+        <button type="button" th:onclick="|window.location.href='@{/cart}'|">Cancel</button>
+        <button type="submit">Place Order</button>
+    </form>
+</section>
+
+<section>
+    <h2>Find What Your Pet Needs</h2>
+    <p>Here To Make Your Pet Happy</p>
+    <div>
+        <img th:src="@{/images/pet-banner.jpg}" alt="Pet Banner">
+    </div>
+</section>
+
+<section>
+    <h2>Pet Products</h2>
+    <p>Quality products for your furry friends</p>
+    <nav>
+        <a th:href="@{/products}">All Products</a>
+        <a th:href="@{/products?category=food}">Pet Food</a>
+        <a th:href="@{/products?category=toys}">Toys</a>
+        <a th:href="@{/products?category=accessories}">Accessories</a>
+        <a th:href="@{/products?category=grooming}">Grooming</a>
+    </nav>
+    <div th:if="${products == null}">
+        <p>Loading products...</p>
+    </div>
+    <div th:unless="${products == null}" th:each="product : ${products}">
+        <div>
+            <h3 th:text="${product.name}">Product Name</h3>
+            <p th:text="'Rs. ' + ${product.price}">Rs. 0</p>
+            <a th:href="@{/products/{id}(id=${product.id})}">View Product</a>
+        </div>
+    </div>
+    <div th:if="${productsError}">
+        <p>Unable to load products. Please try again later.</p>
+    </div>
+</section>
+
+<footer>
+    <div>
+        <h3>VetCare</h3>
+        <p>Providing professional veterinary care and products to ensure the health and happiness of your beloved pets.</p>
+    </div>
+    <div>
+        <h3>Quick Links</h3>
+        <ul>
+            <li><a th:href="@{/about}">About Us</a></li>
+            <li><a th:href="@{/services}">Our Services</a></li>
+            <li><a th:href="@{/products}">Products</a></li>
+            <li><a th:href="@{/contact}">Contact</a></li>
+            <li><a th:href="@{/book}">Book Appointment</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3>Subscribe to Our Newsletter</h3>
+        <p>Stay updated with our latest services, products, and pet care tips</p>
+        <form th:action="@{/subscribe}" method="post">
+            <input type="email" th:field="*{email}" placeholder="Your Email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+    <p>&copy; 2025 Vetcare Nepal. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

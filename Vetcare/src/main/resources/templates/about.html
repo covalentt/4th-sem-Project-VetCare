@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Us | Vetcare Nepal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/about.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/index}">
+            <img th:src="@{/image/logo.png}" alt="Vetcare Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/index}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/about}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/services}">Our Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/contact}">Contact</a></li>
+            </ul>
+            <div class="nav-buttons d-flex align-items-center"></div>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12 hero-content">
+                <div class="animate__animated animate__fadeInLeft">
+                    <h1>About Vetcare Nepal</h1>
+                    <p class="lead">Discover our journey, values, and commitment to providing exceptional veterinary care for your beloved companions across Nepal.</p>
+                    <div class="hero-buttons">
+                        <a href="#our-story" class="btn btn-primary me-3">Our Story</a>
+                        <a th:href="@{/services}" class="btn btn-outline-primary">Our Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="animate__animated animate__fadeInRight">
+                    <img th:src="@{/image/vetu%201.png}" alt="Veterinary Team" class="img-fluid hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="story-section" id="our-story">
+    <div class="container">
+        <div class="section-header">
+            <div class="animate__animated animate__bounce animate__slow animate__infinite">
+                <h2>Our Story</h2>
+            </div>
+            <p class="section-subtitle">From humble beginnings to Nepal's leading veterinary care provider</p>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12">
+                <div class="story-image-container">
+                    <img th:src="@{/image/vetu%201.png}" alt="Veterinary Clinic" class="img-fluid story-image">
+                    <div class="floating-card">
+                        <i class="fas fa-heart"></i>
+                        <span>15+ Years of Excellence</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 story-content">
+                <div class="content-card">
+                    <h3>Nurturing Nepal through Animal Care</h3>
+                    <p>At Vetcare Nepal, we are dedicated to providing exceptional care for your beloved pets. Our journey began with a passion for animals and a commitment to ensuring their health and happiness.</p>
+                    <div class="highlight-box">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"As Nepal's leading animal health company, we believe in the power of compassionate care and advanced veterinary medicine to make a difference in every pet's life."</p>
+                    </div>
+                    <p>Founded with a vision to revolutionize pet healthcare in Nepal, we have grown from a small clinic to a comprehensive veterinary center offering a wide range of services designed to meet all your pet's needs.</p>
+                    <div class="story-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10,000+</span>
+                            <span class="stat-label">Happy Pets Treated</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5,000+</span>
+                            <span class="stat-label">Satisfied Families</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Emergency Care</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="animate__animated animate__bounce animate__slow animate__infinite">
+                <h2>Meet Our Team</h2>
+            </div>
+            <p class="section-subtitle">Working in collaboration with practices, we care for people, their pets, and our profession</p>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12 team-content">
+                <div class="team-card">
+                    <h3>The SmartCare Team</h3>
+                    <p>No two practices are the same. We embrace and encourage that independent spirit, while at the same time supporting practices to provide outstanding care for patients and an excellent service for clients.</p>
+                    <div class="team-features">
+                        <div class="feature-item">
+                            <i class="fas fa-user-md"></i>
+                            <span>Certified Veterinarians</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Continuous Education</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-heart"></i>
+                            <span>Compassionate Care</span>
+                        </div>
+                    </div>
+                    <p>Our team consists of highly trained veterinarians, experienced technicians, and compassionate support staff who work together to ensure your pet receives the best possible care.</p>
+                    <a href="#" class="btn btn-primary">Meet Our Veterinarians</a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="team-image-container">
+                    <img th:src="@{/image/dogy 2.png}" alt="Vet Team" class="img-fluid team-image">
+                    <div class="floating-elements">
+                        <div class="floating-icon icon-1">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <div class="floating-icon icon-2">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <div class="floating-icon icon-3">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mission-vision-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="animate__animated animate__bounce animate__slow animate__infinite">
+                <h2>Our Purpose</h2>
+            </div>
+            <p class="section-subtitle">Driven by passion, guided by values</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="purpose-card mission-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>At Vetcare Nepal, our mission is to enhance the quality of life for pets by providing exceptional, compassionate veterinary care while educating and supporting pet owners in maintaining their companion's health and well-being.</p>
+                        <div class="mission-points">
+                            <div class="point">
+                                <i class="fas fa-check"></i>
+                                <span>Advanced medical technologies</span>
+                            </div>
+                            <div class="point">
+                                <i class="fas fa-check"></i>
+                                <span>Highest standards of veterinary practice</span>
+                            </div>
+                            <div class="point">
+                                <i class="fas fa-check"></i>
+                                <span>Stress-free environment for pets and owners</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="purpose-card vision-card">
+                    <div class="card-header">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Our Vision</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>We envision a future where every pet in Nepal has access to quality healthcare, where preventive medicine is standard practice, and where the human-animal bond is celebrated and strengthened.</p>
+                        <div class="vision-goals">
+                            <div class="goal">
+                                <span class="goal-number">01</span>
+                                <span class="goal-text">Leading veterinary service provider in Nepal</span>
+                            </div>
+                            <div class="goal">
+                                <span class="goal-number">02</span>
+                                <span class="goal-text">Excellence in animal healthcare innovation</span>
+                            </div>
+                            <div class="goal">
+                                <span class="goal-number">03</span>
+                                <span class="goal-text">Community education about proper pet care</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="values-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="animate__animated animate__bounce animate__slow animate__infinite">
+                <h2>Our Core Values</h2>
+            </div>
+            <p class="section-subtitle">The principles that guide everything we do</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>Compassion</h4>
+                    <p>We treat every animal with kindness, empathy, and respect, recognizing their individual needs and the special bond they share with their owners.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="value-card featured">
+                    <div class="value-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h4>Excellence</h4>
+                    <p>We are committed to providing the highest standard of veterinary care through ongoing education, advanced technology, and best practices.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h4>Education</h4>
+                    <p>We believe in empowering pet owners with knowledge and resources to be active participants in their pets' healthcare decisions.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Integrity</h4>
+                    <p>We operate with honesty, transparency, and ethical standards in all aspects of our practice, building trust with our clients and community.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Community</h4>
+                    <p>We are dedicated to making a positive impact in our local community through outreach programs, educational initiatives, and support for animal welfare.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Innovation</h4>
+                    <p>We continuously seek new and improved ways to provide care, embracing advances in veterinary medicine to offer the best possible outcomes for our patients.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 footer-info">
+                <div class="footer-brand">VetCare</div>
+                <p>Providing professional veterinary care and products to ensure the health and happiness of your beloved pets.</p>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a th:href="@{/about}">About Us</a></li>
+                    <li><a th:href="@{/services}">Our Services</a></li>
+                    <li><a th:href="@{/products}">Products</a></li>
+                    <li><a th:href="@{/contact}">Contact</a></li>
+                    <li><a th:href="@{/book}">Book Appointment</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-12 footer-newsletter">
+                <h4>Subscribe to Our Newsletter</h4>
+                <p>Stay updated with our latest services, products, and pet care tips</p>
+                <form action="" method="post">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                </form>
+                <div class="social-links mt-4">
+                    <a href="https://www.facebook.com" target="_blank" class="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" class="tiktok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" class="instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Vetcare Nepal. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', function() {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > 100) {
+                if (currentScroll > lastScrollTop) {
+                    navbar.classList.add('hidden');
+                } else {
+                    navbar.classList.remove('hidden');
+                }
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        }, false);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.value-card, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    });
+</script>
+<script th:src="@{/js/navbar.js}"></script>
+</body>
+</html>

@@ -1,0 +1,864 @@
+<!-- admin.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetCare Nepal Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/admin.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+    <div class="text-center mb-4">
+        <img src="../static/image/logo.png" alt="VetCare Logo" height="60">
+        <h4 class="mt-2">VetCare Admin</h4>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link active" href="#dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#users"><i class="fas fa-users me-2"></i> User Management</a></li>
+        <li class="nav-item"><a class="nav-link" href="#appointments"><i class="fas fa-calendar-check me-2"></i> Appointments</a></li>
+        <li class="nav-item"><a class="nav-link" href="#vets"><i class="fas fa-user-md me-2"></i> Vets & Schedules</a></li>
+        <li class="nav-item"><a class="nav-link" href="#products"><i class="fas fa-box me-2"></i> Product Management</a></li>
+        <li class="nav-item"><a class="nav-link" href="#orders"><i class="fas fa-shopping-cart me-2"></i> Order Management</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reports"><i class="fas fa-chart-bar me-2"></i> Reports & Logs</a></li>
+        <li class="nav-item"><a class="nav-link" href="#settings"><i class="fas fa-cog me-2"></i> Settings</a></li>
+        <li class="nav-item"><a class="nav-link" href="#logout"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+    </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="fade-in">
+        <h2 class="mb-4">Dashboard Overview</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-card card">
+                    <i class="fas fa-calendar-day fa-2x text-primary mb-2"></i>
+                    <p class="stat-number" id="today-appointments">0</p>
+                    <p>Today's Appointments</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card card">
+                    <i class="fas fa-shopping-bag fa-2x text-primary mb-2"></i>
+                    <p class="stat-number" id="pending-orders">0</p>
+                    <p>Pending Orders</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card card">
+                    <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                    <p class="stat-number" id="total-users">0</p>
+                    <p>Total Users</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card card">
+                    <i class="fas fa-dollar-sign fa-2x text-primary mb-2"></i>
+                    <p class="stat-number" id="revenue">NPR 0</p>
+                    <p>Monthly Revenue</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Revenue Chart</h5>
+                        <canvas id="revenueChart" class="chart-container"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upcoming Appointments Calendar</h5>
+                        <div id="dashboardCalendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Recent Activity</h5>
+                <table class="table table-striped" id="recentActivityTable">
+                    <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Action</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data fetched via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Management Section -->
+    <section id="users" class="fade-in d-none">
+        <h2 class="mb-4">User Management</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="card-title">Users List</h5>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="fas fa-plus me-2"></i> Add User</button>
+                </div>
+                <input type="text" class="form-control mb-3" placeholder="Search by name or email" id="userSearch">
+                <table class="table table-striped" id="usersTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data fetched via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointments Management Section -->
+    <section id="appointments" class="fade-in d-none">
+        <h2 class="mb-4">Appointments Management</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="card-title">Appointments List</h5>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAppointmentModal"><i class="fas fa-plus me-2"></i> Add Appointment</button>
+                </div>
+                <input type="text" class="form-control mb-3" placeholder="Search by customer or date" id="appointmentSearch">
+                <table class="table table-striped" id="appointmentsTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Pet</th>
+                        <th>Service</th>
+                        <th>Vet</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data fetched via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Appointment Calendar</h5>
+                <div id="appointmentsCalendar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vets & Schedules Section -->
+    <section id="vets" class="fade-in d-none">
+        <h2 class="mb-4">Vets & Schedules Management</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="card-title">Vets List</h5>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVetModal"><i class="fas fa-plus me-2"></i> Add Vet</button>
+                        </div>
+                        <table class="table table-striped" id="vetsTable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Specialization</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Data fetched via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Schedule Editor</h5>
+                        <form id="scheduleForm">
+                            <div class="mb-3">
+                                <label for="vetSelect" class="form-label">Select Vet</label>
+                                <select id="vetSelect" class="form-select"></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="day" class="form-label">Day</label>
+                                <select id="day" class="form-select">
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                    <option>Saturday</option>
+                                    <option>Sunday</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="startTime" class="form-label">Start Time</label>
+                                    <input type="time" id="startTime" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="endTime" class="form-label">End Time</label>
+                                    <input type="time" id="endTime" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="slots" class="form-label">Slots</label>
+                                <input type="number" id="slots" class="form-control" value="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Schedule</button>
+                            <button type="button" class="btn btn-secondary ms-2" id="sendTimetableBtn">Send Timetable Email</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Management Section -->
+    <section id="products" class="fade-in d-none">
+        <h2 class="mb-4">Product Management</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="card-title">Products List</h5>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="fas fa-plus me-2"></i> Add Product</button>
+                </div>
+                <input type="text" class="form-control mb-3" placeholder="Search products" id="productSearch">
+                <table class="table table-striped" id="productsTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data fetched via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Management Section -->
+    <section id="orders" class="fade-in d-none">
+        <h2 class="mb-4">Order Management</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Orders List</h5>
+                <input type="text" class="form-control mb-3" placeholder="Search orders" id="orderSearch">
+                <table class="table table-striped" id="ordersTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data fetched via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Reports & Logs Section -->
+    <section id="reports" class="fade-in d-none">
+        <h2 class="mb-4">Reports & Logs</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Reports</h5>
+                        <select class="form-select mb-3" id="reportType">
+                            <option>Appointments Report</option>
+                            <option>Orders Report</option>
+                            <option>Revenue Report</option>
+                        </select>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" class="form-control" id="startDate" placeholder="Start Date">
+                            </div>
+                            <div class="col">
+                                <input type="date" class="form-control" id="endDate" placeholder="End Date">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-3" id="generateReportBtn">Generate CSV/PDF</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">System Logs</h5>
+                        <table class="table table-striped" id="logsTable">
+                            <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Action</th>
+                                <th>User</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Data fetched via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Section (Admin Profile Edit) -->
+    <section id="settings" class="fade-in d-none">
+        <h2 class="mb-4">Settings</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Admin Profile</h5>
+                <form id="adminProfileForm">
+                    <div class="mb-3">
+                        <label for="adminName" class="form-label">Name</label>
+                        <input type="text" id="adminName" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="adminEmail" class="form-label">Email</label>
+                        <input type="email" id="adminEmail" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="adminPassword" class="form-label">New Password</label>
+                        <input type="password" id="adminPassword" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="adminConfirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" id="adminConfirmPassword" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Full Name</label>
+                            <input type="text" id="userName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input type="email" id="userEmail" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPhone" class="form-label">Phone</label>
+                            <input type="tel" id="userPhone" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPassword" class="form-label">Password</label>
+                            <input type="password" id="userPassword" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userRole" class="form-label">Role</label>
+                            <select id="userRole" class="form-select">
+                                <option value="customer">Customer</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Appointment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAppointmentForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="appCustomer" class="form-label">Customer Name</label>
+                                    <input type="text" id="appCustomer" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="appPetName" class="form-label">Pet Name</label>
+                                    <input type="text" id="appPetName" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="appPetType" class="form-label">Pet Type</label>
+                                    <select id="appPetType" class="form-select">
+                                        <option>Dog</option>
+                                        <option>Cat</option>
+                                        <option>Bird</option>
+                                        <option>Rabbit</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="appPetBreed" class="form-label">Breed</label>
+                                    <input type="text" id="appPetBreed" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="appService" class="form-label">Service</label>
+                                    <select id="appService" class="form-select" required>
+                                        <!-- Populate from API -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="appVet" class="form-label">Vet</label>
+                                    <select id="appVet" class="form-select" required>
+                                        <!-- Populate from API -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="appDate" class="form-label">Date</label>
+                                    <input type="date" id="appDate" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="appTime" class="form-label">Time</label>
+                                    <input type="time" id="appTime" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appMedicalHistory" class="form-label">Medical History / Notes</label>
+                            <textarea id="appMedicalHistory" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Vet Modal -->
+    <div class="modal fade" id="addVetModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Vet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addVetForm">
+                        <div class="mb-3">
+                            <label for="vetName" class="form-label">Name</label>
+                            <input type="text" id="vetName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vetEmail" class="form-label">Email</label>
+                            <input type="email" id="vetEmail" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vetSpecialization" class="form-label">Specialization</label>
+                            <input type="text" id="vetSpecialization" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Vet</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Name</label>
+                                    <input type="text" id="productName" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productPrice" class="form-label">Price (NPR)</label>
+                                    <input type="number" id="productPrice" class="form-control" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productStock" class="form-label">Stock</label>
+                                    <input type="number" id="productStock" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productCategory" class="form-label">Category</label>
+                                    <select id="productCategory" class="form-select" required>
+                                        <option>Pet Food</option>
+                                        <option>Toys</option>
+                                        <option>Accessories</option>
+                                        <option>Grooming</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productDescription" class="form-label">Description</label>
+                                    <textarea id="productDescription" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productImage" class="form-label">Image</label>
+                                    <input type="file" id="productImage" class="form-control" accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- JavaScript Dependencies -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    // admin.js
+
+    // ----------------------
+    // Sidebar Navigation
+    // ----------------------
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('section').forEach(sec => sec.classList.add('d-none'));
+            const target = this.getAttribute('href');
+            if (target !== '#logout') document.querySelector(target).classList.remove('d-none');
+            if (target === '#logout') {
+                localStorage.removeItem('jwt');
+                window.location.href = '/login.html';
+            }
+        });
+    });
+
+    // ----------------------
+    // Fetch Stats (replace with API if needed)
+    // ----------------------
+    function fetchStats() {
+        document.getElementById('today-appointments').textContent = 15;
+        document.getElementById('pending-orders').textContent = 8;
+        document.getElementById('total-users').textContent = 1200;
+        document.getElementById('revenue').textContent = 'NPR 150,000';
+    }
+
+    // ----------------------
+    // Revenue Chart
+    // ----------------------
+    function initRevenueChart() {
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [12000, 19000, 3000, 5000, 20000, 30000],
+                    borderColor: '#0d6efd',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // ----------------------
+    // Initialize Calendar
+    // ----------------------
+    function initCalendar(elementId) {
+        const calendarEl = document.getElementById(elementId);
+        if (!calendarEl) return;
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            height: 'auto',
+            events: [
+                { title: 'Appointment with John', date: '2025-09-10', color: '#0d6efd' }
+            ],
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            editable: true,
+            dayMaxEvents: true
+        });
+        calendar.render();
+    }
+
+    // ----------------------
+    // Initialize DataTables
+    // ----------------------
+    function initDataTables(tableId) {
+        return $(`#${tableId}`).DataTable({
+            paging: true,
+            searching: true,
+            ordering: true
+        });
+    }
+
+    // ----------------------
+    // Users Management
+    // ----------------------
+    async function loadUsers() {
+        try {
+            const res = await fetch('/api/users');
+            const users = await res.json();
+            const table = $('#usersTable').DataTable();
+            table.clear();
+            users.forEach(u => {
+                table.row.add([
+                    u.id,
+                    u.name,
+                    u.email,
+                    u.phone,
+                    u.role,
+                    `<button class="btn btn-sm btn-danger" onclick="deleteUser(${u.id})">Delete</button>`
+                ]);
+            });
+            table.draw();
+        } catch (err) {
+            console.error('Error loading users:', err);
+        }
+    }
+
+    async function addUser(event) {
+        event.preventDefault();
+        const payload = {
+            name: document.getElementById('userName').value,
+            email: document.getElementById('userEmail').value,
+            phone: document.getElementById('userPhone').value,
+            password: document.getElementById('userPassword').value,
+            role: document.getElementById('userRole').value
+        };
+        try {
+            await fetch('/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            bootstrap.Modal.getInstance(document.getElementById('addUserModal')).hide();
+            loadUsers();
+            alert('User added successfully');
+        } catch (err) {
+            console.error('Error adding user:', err);
+            alert('Failed to add user');
+        }
+    }
+
+    async function deleteUser(userId) {
+        if (!confirm('Are you sure you want to delete this user?')) return;
+        try {
+            await fetch(`/api/users/${userId}`, { method: 'DELETE' });
+            loadUsers();
+            alert('User deleted');
+        } catch (err) {
+            console.error(err);
+            alert('Failed to delete user');
+        }
+    }
+
+    // ----------------------
+    // Products Management
+    // ----------------------
+    async function loadProducts() {
+        try {
+            const res = await fetch('/api/products');
+            const products = await res.json();
+            const table = $('#productsTable').DataTable();
+            table.clear();
+            products.forEach(p => {
+                table.row.add([
+                    p.id,
+                    p.title,
+                    p.price,
+                    p.stock || 0,
+                    p.category,
+                    `<button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">Delete</button>`
+                ]);
+            });
+            table.draw();
+        } catch (err) {
+            console.error('Error loading products:', err);
+        }
+    }
+
+    async function addProduct(event) {
+        event.preventDefault();
+        const form = document.getElementById('addProductForm');
+        const formData = new FormData(form);
+        try {
+            await fetch('/api/products', {
+                method: 'POST',
+                body: formData
+            });
+            bootstrap.Modal.getInstance(document.getElementById('addProductModal')).hide();
+            loadProducts();
+            alert('Product added successfully');
+            form.reset();
+        } catch (err) {
+            console.error('Error adding product:', err);
+            alert('Failed to add product');
+        }
+    }
+
+    async function deleteProduct(productId) {
+        if (!confirm('Are you sure you want to delete this product?')) return;
+        try {
+            await fetch(`/api/products/${productId}`, { method: 'DELETE' });
+            loadProducts();
+            alert('Product deleted');
+        } catch (err) {
+            console.error(err);
+            alert('Failed to delete product');
+        }
+    }
+
+    // ----------------------
+    // Orders Management
+    // ----------------------
+    async function loadOrders() {
+        try {
+            const res = await fetch('/api/order');
+            const orders = await res.json();
+            const table = $('#ordersTable').DataTable();
+            table.clear();
+            orders.forEach(o => {
+                table.row.add([
+                    o.id,
+                    o.customerName,
+                    o.totalAmount,
+                    o.status,
+                    new Date(o.createdAt).toLocaleDateString(),
+                    `<button class="btn btn-sm btn-info" onclick="viewOrder(${o.id})">View</button>`
+                ]);
+            });
+            table.draw();
+        } catch (err) {
+            console.error('Error loading orders:', err);
+        }
+    }
+
+    function viewOrder(orderId) {
+        alert('Implement order view modal or redirect here. Order ID: ' + orderId);
+    }
+
+    // ----------------------
+    // Init Everything
+    // ----------------------
+    window.onload = function() {
+        fetchStats();
+        initRevenueChart();
+        initCalendar('dashboardCalendar');
+        initCalendar('appointmentsCalendar');
+
+        initDataTables('recentActivityTable');
+        initDataTables('usersTable');
+        initDataTables('appointmentsTable');
+        initDataTables('vetsTable');
+        initDataTables('productsTable');
+        initDataTables('ordersTable');
+        initDataTables('logsTable');
+
+        // Load data
+        loadUsers();
+        loadProducts();
+        loadOrders();
+
+        // Event listeners
+        document.getElementById('addUserForm').addEventListener('submit', addUser);
+        document.getElementById('addProductForm').addEventListener('submit', addProduct);
+
+        document.getElementById('sendTimetableBtn').addEventListener('click', () => {
+            alert('Timetable email sent');
+        });
+
+        document.getElementById('generateReportBtn').addEventListener('click', () => {
+            alert('Report generated');
+        });
+
+        document.getElementById('adminProfileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Profile updated');
+        });
+    };
+</script>
+
+
+</body>
+</html>
